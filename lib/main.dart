@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -28,40 +29,46 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   final realController = TextEditingController();
-  final dolarController = TextEditingController();
+  final dollarController = TextEditingController();
   final euroController = TextEditingController();
   final poundsController = TextEditingController();
 
+  FocusNode _nodeText1 = FocusNode();
+  FocusNode _nodeText2 = FocusNode();
+  FocusNode _nodeText3 = FocusNode();
+  FocusNode _nodeText4 = FocusNode();
+  FocusNode _nodeText5 = FocusNode();
+
   double real;
-  double dolar;
+  double dollar;
   double euro;
   double pounds;
 
   void _realChanged(String text){
     double real = double.parse(text);
-    dolarController.text = (real/dolar).toStringAsFixed(2);
+    dollarController.text = (real/dollar).toStringAsFixed(2);
     euroController.text = (real/euro).toStringAsFixed(2);
     poundsController.text = (real/pounds).toStringAsFixed(2);
   }
 
   void _dolarChanged(String text){
-    double dolar = double.parse(text);
-    realController.text = (dolar * this.dolar).toStringAsFixed(2);
-    euroController.text = (dolar * this.dolar / euro).toStringAsFixed(2);
-    poundsController.text = (dolar * this.dolar / pounds).toStringAsFixed(2);
+    double dollar = double.parse(text);
+    realController.text = (dollar * this.dollar).toStringAsFixed(2);
+    euroController.text = (dollar * this.dollar / euro).toStringAsFixed(2);
+    poundsController.text = (dollar * this.dollar / pounds).toStringAsFixed(2);
   }
 
   void _euroChanged(String text){
     double euro = double.parse(text);
     realController.text = (euro * this.euro).toStringAsFixed(2);
-    dolarController.text = (euro * this.euro / dolar).toStringAsFixed(2);
+    dollarController.text = (euro * this.euro / dollar).toStringAsFixed(2);
     poundsController.text = (euro * this.euro / pounds).toStringAsFixed(2);
   }
 
   void _poundsChanged(String text){
     double pounds = double.parse(text);
     realController.text = (pounds * this.pounds).toStringAsFixed(2);
-    dolarController.text = (pounds * this.pounds / dolar).toStringAsFixed(2);
+    dollarController.text = (pounds * this.pounds / dollar).toStringAsFixed(2);
     euroController.text = (pounds * this.pounds / euro).toStringAsFixed(2);
   }
 
@@ -95,7 +102,7 @@ class _HomeState extends State<Home> {
                     textAlign: TextAlign.center,
                   ));
                 } else {
-                  dolar = snapshot.data["results"]["currencies"]["USD"]["buy"];
+                  dollar = snapshot.data["results"]["currencies"]["USD"]["buy"];
                   euro = snapshot.data["results"]["currencies"]["EUR"]["buy"];
                   pounds = snapshot.data["results"]["currencies"]["GBP"]["buy"];
 
@@ -112,7 +119,7 @@ class _HomeState extends State<Home> {
                       Divider(),
                       buildTextField("Reais", "R\$ ", realController, _realChanged),
                       Divider(),
-                      buildTextField("Dólares", "US\$ ", dolarController, _dolarChanged),
+                      buildTextField("Dólares", "US\$ ", dollarController, _dolarChanged),
                       Divider(),
                       buildTextField("Euros", "€ ", euroController, _euroChanged),
                       Divider(),
@@ -122,6 +129,7 @@ class _HomeState extends State<Home> {
                 }
             }
           }),
+
     );
   }
 }

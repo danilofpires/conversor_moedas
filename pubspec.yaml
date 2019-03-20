@@ -21,8 +21,10 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   ## Aditional dependencies added by the developer. HTTP for JSON download.
-
   http: ^0.12.0+1
+
+  ##Keyboard Actions for OK or Done button on Numeric Keypad
+  keyboard_actions: ^1.0.3
 
 dev_dependencies:
   flutter_test:
